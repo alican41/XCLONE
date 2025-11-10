@@ -32,12 +32,14 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         await connectDB()
-        app.listen(ENV.PORT, () => {
-            console.log(`Server is running on port ${ENV.PORT}`);
-        })
+        if (ENV.NODE_ENV !=="production") {
+            app.listen(ENV.PORT, () => {console.log(`Server is running on port ${ENV.PORT}`);})
+        }
     } catch (error) {
         console.error("Failed to start server:", error);
         process.exit(1);
     }                               
 }
 startServer();
+
+export default app;
